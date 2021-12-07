@@ -3,6 +3,15 @@
 
 
 
+
+# 개요
+
+데이터: 대략 470시간 분량의 한국어 데이터. 낭독체
+실제 참여 기간: 11월 25일 ~ 12월 7일
+사용 tool: kaldi, sgspeech_v2 (kaldi는 시간안에 학습 완료 안됨)
+
+
+
 # 포스터
 ![image](https://user-images.githubusercontent.com/7467605/144969143-29c28b37-6d5d-4535-8f2e-4d42d913f019.png)
 
