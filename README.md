@@ -14,6 +14,10 @@
 
 사용 tool: kaldi, sgspeech_v2 (kaldi는 시간안에 학습 완료 안됨)
 
+# 제출 이력
+
+<img width="832" alt="image" src="https://user-images.githubusercontent.com/7467605/144986734-2ef1df9d-e2a0-4f94-b89f-e6248aafc274.png">
+
 
 
 # 포스터
