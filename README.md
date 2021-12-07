@@ -14,6 +14,11 @@
 
 사용 tool: kaldi, sgspeech_v2 (kaldi는 시간안에 학습 완료 안됨)
 
+
+# 성적
+
+![image](https://user-images.githubusercontent.com/7467605/144986778-d58ce431-01a7-4074-973c-545d68964cf0.png)
+
 # 제출 이력
 
 <img width="832" alt="image" src="https://user-images.githubusercontent.com/7467605/144986734-2ef1df9d-e2a0-4f94-b89f-e6248aafc274.png">
