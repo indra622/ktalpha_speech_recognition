@@ -1,3 +1,7 @@
+## Eunsoo Cho
+## ASR result postprocessing 
+
+
 from jamo import j2h 
 import csv
 start_syllable=['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ']
