@@ -14,21 +14,11 @@ parser = argparse.ArgumentParser(prog="Conformer Training")
 
 parser.add_argument("--config", type=str, default=DEFAULT_YAML, help="The file path of model configuration file")
 
-parser.add_argument("--max_ckpts", type=int, default=10, help="Max number of checkpoints to keep")
-
-parser.add_argument("--tfrecords", default=False, action="store_true", help="Whether to use tfrecords")
-
-parser.add_argument("--tbs", type=int, default=None, help="Train batch size per replica")
-
-parser.add_argument("--ebs", type=int, default=None, help="Evaluation batch size per replica")
-
 parser.add_argument("--devices", type=int, nargs="*", default=[0], help="Devices' ids to apply distributed training")
-
-parser.add_argument("--mxp", default=False, action="store_true", help="Enable mixed precision")
 
 args = parser.parse_args()
 
-tf.config.optimizer.set_experimental_options({"auto_mixed_precision": args.mxp})
+tf.config.optimizer.set_experimental_options({"auto_mixed_precision": False})
 
 strategy = setup_strategy(args.devices)
 
@@ -79,4 +69,4 @@ with conformer_trainer.strategy.scope():
 conformer_trainer.compile(model=conformer, optimizer=optimizer,
                           max_to_keep=args.max_ckpts)
 
-conformer_trainer.fit(train_dataset, eval_dataset, train_bs=args.tbs, eval_bs=args.ebs)
+conformer_trainer.fit(train_dataset, eval_dataset, train_bs=1, eval_bs=1)

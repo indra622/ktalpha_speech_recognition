@@ -11,11 +11,15 @@ speech_config:
 
 decoder_config:
   vocabulary: null
+  target_vocab_size: 2000
+  max_subword_length: 4
   blank_at_zero: True
   beam_width: 5
   norm_score: True
+  output_path_prefix: /home/workspace/kt_conformer
+  model_type: unigram
   corpus_files:
-    - /content/LibriSpeech/train-clean-100/transcripts.tsv
+    -  /content/transcripts.tsv
 
 model_config:
   name: conformer
@@ -25,7 +29,7 @@ model_config:
     kernel_size: 3
     strides: 2
   encoder_positional_encoding: sinusoid_concat
-  encoder_dmodel: 144
+  encoder_dmodel: 512
   encoder_num_blocks: 16
   encoder_head_size: 36
   encoder_num_heads: 4
@@ -33,22 +37,36 @@ model_config:
   encoder_kernel_size: 32
   encoder_fc_factor: 0.5
   encoder_dropout: 0.1
-  prediction_embed_dim: 320
+  prediction_embed_dim: 640
   prediction_embed_dropout: 0
   prediction_num_rnns: 1
   prediction_rnn_units: 320
   prediction_rnn_type: lstm
   prediction_rnn_implementation: 2
   prediction_layer_norm: False
-  prediction_projection_units: 144
+  prediction_projection_units: 512
   joint_dim: 640
   prejoint_linear: False
   joint_activation: tanh
 
 learning_config:
   train_dataset_config:
+    use_tf: True
+    augmentation_config:
+      #before:
+      #  noise:
+      #    noises: /path/to/noise
+      after:
+        time_masking:
+          num_masks: 10
+          mask_factor: 100
+          p_upperbound: 0.05
+        freq_masking:
+          num_masks: 1
+          mask_factor: 27
     data_paths:
-      - /content/LibriSpeech/train-clean-100/transcripts.tsv
+    -  /content/transcripts.tsv
+    
     shuffle: True
     cache: True
     buffer_size: 100
@@ -56,13 +74,24 @@ learning_config:
     stage: train
 
   eval_dataset_config:
+    use_tf: True
     data_paths:
-      - /content/LibriSpeech/dev-clean/transcripts.tsv
+            - /content/transcripts_dev.tsv
     shuffle: False
     cache: True
     buffer_size: 100
     drop_remainder: True
     stage: eval
+
+  test_dataset_config:
+    use_tf: True
+    data_paths:
+    - /content/testlist.tsv
+    shuffle: False
+    cache: True
+    buffer_size: 100
+    drop_remainder: True
+    stage: test
 
   optimizer_config:
     warmup_steps: 40000
@@ -71,21 +100,20 @@ learning_config:
     epsilon: 1e-9
 
   running_config:
-    batch_size: 2
-    accumulation_steps: 4
+    batch_size: 4
     num_epochs: 20
-    outdir: /content/conformer
+    outdir: /content/kt_conformer
     log_interval_steps: 300
     eval_interval_steps: 50000
     save_interval_steps: 100000
     checkpoint:
-      filepath: /content/conformer/checkpoints/{epoch:02d}.h5
+      filepath: /content/kt_conformer/checkpoints/{epoch:02d}.h5
       save_best_only: True
       save_weights_only: False
       save_freq: epoch
-    states_dir: /content/conformer/states
+    states_dir: /content/kt_conformer/states
     tensorboard:
-      log_dir: /content/conformer/tensorboard
+      log_dir: /content/kt_conformer/tensorboard
       histogram_freq: 1
       write_graph: True
       write_images: True
