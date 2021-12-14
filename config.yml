@@ -22,7 +22,7 @@ decoder_config:
     -  /content/transcripts.tsv
 
 model_config:
-  name: conformer
+  name: conformer_small
   encoder_subsampling:
     type: conv2d
     filters: 144
